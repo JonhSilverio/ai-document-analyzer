@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoraStack | Smart Document Analyzer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-shape bg-shape-1"></div>
+    <div class="bg-shape bg-shape-2"></div>
+
+    <nav class="navbar">
+        <div class="logo">
+            <span class="logo-icon">✦</span> MoraStack <b>AI</b>
+        </div>
+        <a href="#" id="link-how-it-works" class="nav-link">How it works</a>
+    </nav>
+
+    <main class="container">
+        <header class="hero">
+            <h1>Analyze Contracts in Seconds with AI</h1>
+            <p>Upload your document or paste the text below. Our AI will instantly extract key points, classify risks, and generate an executive summary.</p>
+        </header>
+
+        <section id="upload-section" class="card glass-panel">
+            <div class="tabs">
+                <button id="tab-upload" class="tab active">Upload File</button>
+                <button id="tab-paste" class="tab">Paste Text</button>
+            </div>
+            
+            <div id="dropzone" class="dropzone">
+                <div class="dropzone-content">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="upload-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    <h3>Drag & Drop your .txt document here</h3>
+                    <p>For this demo, we support .TXT files only.</p>
+                    
+                    <input type="file" id="file-upload" class="hidden" accept=".txt">
+                    <button id="btn-browse" class="btn-secondary">Browse Files</button>
+                </div>
+            </div>
+
+            <div id="paste-area" class="paste-area hidden">
+                <textarea id="text-input" placeholder="Paste your contract, NDA, or document text here for analysis..."></textarea>
+            </div>
+
+            <button id="btn-analyze" class="btn-primary w-full mt-4">Analyze Document <span class="arrow">→</span></button>
+        </section>
+
+        <section id="loading-state" class="hidden">
+            <div class="loader-container card glass-panel">
+                <div class="spinner"></div>
+                <h3>AI is analyzing your document...</h3>
+                <p class="loading-text">Extracting clauses and classifying risks</p>
+            </div>
+        </section>
+
+        <section id="results-section" class="hidden">
+            <div class="results-header">
+                <h2>Analysis Results</h2>
+                <div class="classification-tags" id="doc-tags"></div>
+            </div>
+
+            <div class="results-grid">
+                <article class="result-card glass-panel executive-summary">
+                    <h3>Executive Summary</h3>
+                    <div id="summary-content" class="content-body"></div>
+                </article>
+
+                <article class="result-card glass-panel risks">
+                    <div class="card-header">
+                        <h3>Attention Points & Risks</h3>
+                        <span class="risk-badge high">Risks Detected</span>
+                    </div>
+                    <ul id="risks-list" class="risk-list"></ul>
+                </article>
+            </div>
+            
+            <button id="btn-reset" class="btn-secondary mt-4">Analyze Another Document</button>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
