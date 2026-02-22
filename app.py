@@ -17,6 +17,10 @@ GOOGLE_API_KEY = os.environ.get("GEMINI_API_KEY")
 
 client = genai.Client(api_key=GOOGLE_API_KEY)
 
+@app.route('/')
+def home():
+    return "<h1>MoraStack AI está Online!</h1><p>A API está funcionando corretamente.</p>"
+
 @app.route('/analyze', methods=['POST'])
 def analyze_document():
     data = request.json
