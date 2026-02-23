@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from google import genai
 from google.genai import types
@@ -6,21 +6,28 @@ import json
 import os
 from dotenv import load_dotenv
 
-# Isso abre o "cofre" (seu arquivo .env)
+
 load_dotenv()
 
 app = Flask(__name__)
 CORS(app) 
 
-# Agora ele pega a chave do cofre, com total segurança!
-GOOGLE_API_KEY = os.environ.get("GEMINI_API_KEY")
+
+GOOGLE_API_KEY = os.getenv("GEMINI_API_KEY")
 
 client = genai.Client(api_key=GOOGLE_API_KEY)
 
+
 @app.route('/')
 def home():
-    return "<h1>MoraStack AI está Online!</h1><p>A API está funcionando corretamente.</p>"
+    return send_from_directory('.', 'index.html')
 
+
+@app.route('/<path:filename>')
+def serve_static(filename):
+    return send_from_directory('.', filename)
+
+# ROTA 3: A inteligência da IA
 @app.route('/analyze', methods=['POST'])
 def analyze_document():
     data = request.json
@@ -47,8 +54,9 @@ def analyze_document():
     """
 
     try:
+        
         response = client.models.generate_content(
-            model='gemini-2.5-flash',
+            model='gemini-2.0-flash', 
             contents=prompt,
             config=types.GenerateContentConfig(
                 response_mime_type="application/json",
@@ -64,4 +72,6 @@ def analyze_document():
         return jsonify({"error": "Falha ao analisar o documento com IA."}), 500
 
 if __name__ == '__main__':
-    app.run()
+   
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
