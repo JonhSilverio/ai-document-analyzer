@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const summaryContent = document.getElementById('summary-content');
     const risksList = document.getElementById('risks-list');
 
-    // Variável para guardar o texto se o usuário fizer upload de um arquivo .txt
     let uploadedTextContent = "";
 
     tabUpload.addEventListener('click', () => {
@@ -34,13 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnBrowse.addEventListener('click', (e) => { e.preventDefault(); fileUpload.click(); });
 
-    // Lógica para ler arquivos .TXT
     fileUpload.addEventListener('change', (e) => {
         if(e.target.files.length > 0) {
             const file = e.target.files[0];
             updateDropzoneUI(file.name);
             
-            // Ler o conteúdo do arquivo
             const reader = new FileReader();
             reader.onload = function(event) {
                 uploadedTextContent = event.target.result;
@@ -73,9 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dropzone.style.background = "rgba(99, 102, 241, 0.05)";
     }
 
-    
     btnAnalyze.addEventListener('click', async () => {
-        
         let textToAnalyze = tabPaste.classList.contains('active') ? textInput.value.trim() : uploadedTextContent.trim();
 
         if(!textToAnalyze) {
@@ -87,8 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loadingState.classList.remove('hidden');
 
         try {
-            // Faz a requisição POST para o seu servidor Flask rodando localmente
-            const response = await fetch('http://localhost:5000/analyze', {
+            const response = await fetch('/analyze', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -100,16 +94,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error('Erro na comunicação com a IA.');
             }
 
-            // Pega o JSON estruturado que o Gemini gerou no back-end
             const realData = await response.json();
-            
-            // Preenche a tela com os DADOS REAIS da IA
             populateResults(realData);
 
         } catch (error) {
             console.error("Erro:", error);
             alert("Ocorreu um erro ao analisar o documento. Verifique se o servidor Python (app.py) está rodando.");
-            // Reseta a tela em caso de erro
             loadingState.classList.add('hidden');
             uploadSection.classList.remove('hidden');
         }
@@ -125,22 +115,18 @@ document.addEventListener('DOMContentLoaded', () => {
         tabUpload.click(); 
     });
 
-    // Função que recebe o JSON real da IA e monta o HTML
     function populateResults(data) {
         loadingState.classList.add('hidden');
         resultsSection.classList.remove('hidden');
 
-        // Renderiza as Tags
         if (data.tags && data.tags.length > 0) {
             docTags.innerHTML = data.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
         }
 
-        // Renderiza o Resumo Executivo
         if (data.summary) {
             summaryContent.innerHTML = data.summary;
         }
 
-        // Renderiza a Lista de Riscos
         if (data.risks && data.risks.length > 0) {
             risksList.innerHTML = data.risks.map(risk => `
                 <li>
