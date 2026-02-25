@@ -33,7 +33,7 @@
 
 ## ✨ Key Features
 
-- **🧠 AI-Powered Insights:** Uses the `gemini-2.0-flash` model to read and understand complex documents in seconds.
+- **🧠 AI-Powered Insights:** Uses the `gemini-2.0-flash-lite` model to read and understand complex documents in seconds.
 - **🎯 Structured Output Generation:** The AI is strictly prompted to return valid JSON, ensuring reliable data mapping for the UI (Tags, Executive Summary, and Risk Classification).
 - **📂 Intuitive Drag & Drop:** Users can seamlessly upload `.txt` files or directly paste text into the browser.
 - **⚡ Asynchronous Processing:** Smooth frontend experience with loading states and modern UI/UX design.
