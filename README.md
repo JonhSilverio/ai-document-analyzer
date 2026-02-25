@@ -25,6 +25,10 @@
   <img src="./imagens/app-preview.png" alt="App Preview" width="800">
 </p>
 
+<p align="center">
+  <img src="./imagens/result-preview.png" alt="App Preview" width="800">
+</p>
+
 ---
 
 ## ✨ Key Features
